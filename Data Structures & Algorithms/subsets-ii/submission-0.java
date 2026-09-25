@@ -1,0 +1,28 @@
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        st.clear(); 
+        helper(0, nums, nums.length, ans, temp);
+        return ans;
+    }
+
+    static HashSet<List<Integer>> st = new HashSet<>();
+
+    public static void helper(
+        int idx, int[] nums, int length, List<List<Integer>> ans, List<Integer> temp) {
+        if (idx >= length) {
+            if(!st.contains(temp)){
+            List<Integer> ls = new ArrayList<>(temp);
+            ans.add(ls);
+            st.add(ls);
+            }
+            return;
+        }
+        temp.add(nums[idx]);
+        helper(idx + 1, nums, length, ans, temp); // take it
+        temp.removeLast();
+        helper(idx + 1, nums, length, ans, temp); // not take it
+    }
+}
